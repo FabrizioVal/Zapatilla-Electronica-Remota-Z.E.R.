@@ -1,13 +1,6 @@
 package com.example.testing
 
-
-import android.content.Context
-import android.os.Bundle
-import android.util.Log
-import android.widget.Button
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import org.eclipse.paho.android.service.MqttAndroidClient
+import org.eclipse.paho.android.service.MqttAndroidClient // imports de libreria paho (MQTT)
 import org.eclipse.paho.client.mqttv3.IMqttActionListener
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.IMqttToken
@@ -16,34 +9,46 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions
 import org.eclipse.paho.client.mqttv3.MqttException
 import org.eclipse.paho.client.mqttv3.MqttMessage
 
+import androidx.appcompat.app.AppCompatActivity // imports libreria de android
+
+import android.content.Context
+import android.os.Bundle
+import android.util.Log
+import android.widget.Button
+import android.widget.Toast
+
+
 
 class MainActivity : AppCompatActivity() {
 
 
-    override fun onCreate(savedInstanceState: Bundle?)
+    override fun onCreate(savedInstanceState: Bundle?)          // onCreate es para la creacion inicial de la interfaz grafica
 
-    { super.onCreate(savedInstanceState)                  //on create
+    { super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val connect = findViewById<Button>(R.id.connect) // El usuario acaba de presionar un boton, se ejecutan los comando debajo
 
-        connect.setOnClickListener {   // boton connect
+        val connect = findViewById<Button>(R.id.connect) // Se crea un value, este es connect. Se asocia el id de connect con el boton.
+
+        connect.setOnClickListener {   // setOnClickListener : Cuando el usuario hace click, se produce el toast debajo
+
             Toast.makeText(this@MainActivity, "You clicked me.", Toast.LENGTH_SHORT).show()}
 
-        val subscribe = findViewById<Button>(R.id.subscribe) 
+        val subscribe = findViewById<Button>(R.id.subscribe)
 
-        subscribe.setOnClickListener {   // boton subscribe
+        subscribe.setOnClickListener {
             Toast.makeText(this@MainActivity, "You clicked me.", Toast.LENGTH_SHORT).show()}
     }
 
-        private lateinit var mqttClient: MqttAndroidClient // MQTT Client, se le da el nombre en esta seccion
-        // TAG
-        companion object AndroidMqttClient{
+    private lateinit var mqttClient: MqttAndroidClient // Se declara y se le da un nombre al MQTT client
+    // TAG
+    companion object AndroidMqttClient{
         const val TAG = "AndroidMqttClient"
+
     }
 
 
-    fun connect(context: Context) {
+    fun connect(context: Context) {             // function para connect, diferentes casos dependiendo del transcurso de la situacion
 
 
         val serverURI = "tcp://broker.emqx.io:1883"
@@ -81,7 +86,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun subscribe(topic: String, qos: Int = 1)  {
+    fun subscribe(topic: String, qos: Int = 1)  {           //function para subscribe
         try {
 
             mqttClient.subscribe(topic, qos, null, object : IMqttActionListener {
@@ -98,7 +103,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun unsubscribe(topic: String) {
+    fun unsubscribe(topic: String) {                        //function para unsubscribe
         try {
             mqttClient.unsubscribe(topic, null, object : IMqttActionListener {
                 override fun onSuccess(asyncActionToken: IMqttToken?) {
@@ -114,7 +119,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun publish(topic: String, msg: String, qos: Int = 1, retained: Boolean = false) {
+    fun publish(topic: String, msg: String, qos: Int = 1, retained: Boolean = false) {      //function para publish
         try {
             val message = MqttMessage()
             message.payload = msg.toByteArray()
@@ -134,7 +139,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun disconnect() {
+    fun disconnect() {              //function para disconnect
         try {
             mqttClient.disconnect(null, object : IMqttActionListener {
                 override fun onSuccess(asyncActionToken: IMqttToken?) {
@@ -150,4 +155,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    }
+}
