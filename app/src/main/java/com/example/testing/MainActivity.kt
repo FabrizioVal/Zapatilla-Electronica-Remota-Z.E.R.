@@ -35,6 +35,8 @@ class MainActivity : AppCompatActivity() {
 
     private val options = MqttConnectOptions() // es privada, ver si no necesita ser global
 
+    
+
     // Comienzo de onCreate
 
     override fun onCreate(savedInstanceState: Bundle?) {
