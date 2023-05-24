@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Testing</string>
+    <string name="connect">connect</string>
+    <string name="disconnect">disconnect</string>
+    <string name="subscribe">subscribe</string>
+    <string name="unsubscribe">unsubscribe</string>
+    <string name="publish">publish</string>
+</resources>
