@@ -1,2 +1,1 @@
-# Codigo-MQTT
-Sitio de almacenamiento para la actualizacion y desarrollo de nuestro codigo de MQTT.
+Esta subdivision sera usada para todos los codigos relacionados con Android Studio 
