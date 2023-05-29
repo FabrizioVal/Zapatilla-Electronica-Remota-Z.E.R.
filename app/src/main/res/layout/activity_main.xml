@@ -31,7 +31,7 @@
         app:layout_constraintVertical_bias="0.049" />
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/TopicInput"
         android:layout_width="148dp"
         android:layout_height="48dp"
         android:ems="10"
@@ -49,7 +49,7 @@
         android:id="@+id/textView1"
         android:layout_width="163dp"
         android:layout_height="26dp"
-        android:text="Insert topic below:"
+        android:text="@string/insert_topic_below"
         android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -9,6 +9,7 @@ import android.widget.Toast
 //variables del proyecto
 import android.content.Context
 import android.util.Log
+import android.widget.EditText
 import org.eclipse.paho.android.service.MqttAndroidClient
 import org.eclipse.paho.client.mqttv3.IMqttActionListener
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     // La variable del cliente se declara primero, fuera del onCreate
 
     private lateinit var mqttClient: MqttAndroidClient
+    private lateinit var TopicInput: EditText
 
     // TAG
     companion object {
@@ -35,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
     private val options = MqttConnectOptions() // es privada, ver si no necesita ser global
 
-    
+
 
     // Comienzo de onCreate
 
@@ -47,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         // de setOnClickListener se ejecuta para el usuario (POR AHORA SOLO UN TOAST SENCILLO)
         // VER LOS CONSTRAINTS DEL BOTON
 
+        connect(this) // llama a connect
 
         val buttonconnect = findViewById<Button>(R.id.button_connect)
 
@@ -54,21 +57,31 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this@MainActivity, "You clicked connect.", Toast.LENGTH_SHORT).show()
         }
 
+        subscribe()  // para subscribe, crear un campo de texto en donde se ingresa string, la cual es asociada a topic
+        // de esta forma, puede haber varios topics y estan son ingresados y escaneados como string
+        // (no) añadi un toString
+
+
+
+
+        TopicInput = findViewById(R.id.TopicInput)
+
         val buttonsubscribe = findViewById<Button>(R.id.button_subscribe)
 
         buttonsubscribe.setOnClickListener {
-            Toast.makeText(this@MainActivity, "You clicked connect.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@MainActivity, "You clicked subscribe.", Toast.LENGTH_SHORT).show()
+
+            var TopicInput : String// var + equivalente de snackbarmsg en el ejemplo : String
+            val topic = TopicInput.text //how to save a variable. SEARCH
+
+
         }
+
+
 
         val serverURI =
             "tcp://broker.emqx.io:1883" //se declaran las variables estaticas, sino las funciones no pueden usarlas
         mqttClient = MqttAndroidClient(this, serverURI, "kotlin_client")
-
-        connect(this) // llama a connect
-
-        subscribe()  // para subscribe, crear un campo de texto en donde se ingresa string, la cual es asociada a topic
-                        // de esta forma, puede haber varios topics y estan son ingresados y escaneados como string
-
 
     }
 
@@ -108,7 +121,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun subscribe(topic: String, qos: Int = 1) {
+    private fun subscribe() { // topic: String, qos: Int = 1
         try {
             mqttClient.subscribe(topic, qos, null, object : IMqttActionListener {
                 override fun onSuccess(asyncActionToken: IMqttToken?) {
