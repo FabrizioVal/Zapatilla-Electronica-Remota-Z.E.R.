@@ -47,7 +47,6 @@ class MainActivity : AppCompatActivity() {
 
         //Esto es un boton. Se encuentra la funcion por ID y lo que este despues
         // de setOnClickListener se ejecuta para el usuario (POR AHORA SOLO UN TOAST SENCILLO)
-        // VER LOS CONSTRAINTS DEL BOTON
 
         connect(this) // llama a connect
 
@@ -57,26 +56,23 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this@MainActivity, "You clicked connect.", Toast.LENGTH_SHORT).show()
         }
 
-        subscribe()  // para subscribe, crear un campo de texto en donde se ingresa string, la cual es asociada a topic
-        // de esta forma, puede haber varios topics y estan son ingresados y escaneados como string
-        // (no) añadi un toString
+        val text = TopicInput.text //Getting the text entered by user using the name of my edittext (TopicInput)
+
+        subscribe(this text)  //quiero relacionar text con topic, asi el nombre que ingreso a traves del edittext se lo toma como topic, y se subscribe a este
+
+
+        TopicInput = findViewById(R.id.TopicInput) // Encuentra el EditText por Id
 
 
 
-
-        TopicInput = findViewById(R.id.TopicInput)
-
-        val buttonsubscribe = findViewById<Button>(R.id.button_subscribe)
+        val buttonsubscribe = findViewById<Button>(R.id.button_subscribe) // Busca Id del boton
 
         buttonsubscribe.setOnClickListener {
             Toast.makeText(this@MainActivity, "You clicked subscribe.", Toast.LENGTH_SHORT).show()
 
-            var TopicInput : String// var + equivalente de snackbarmsg en el ejemplo : String
-            val topic = TopicInput.text //how to save a variable. SEARCH
-
-
+            // Showing the user input
+            Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
         }
-
 
 
         val serverURI =
@@ -121,7 +117,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun subscribe() { // topic: String, qos: Int = 1
+    private fun subscribe(topic: String, qos: Int = 1) { // topic: String, qos: Int = 1
         try {
             mqttClient.subscribe(topic, qos, null, object : IMqttActionListener {
                 override fun onSuccess(asyncActionToken: IMqttToken?) {
