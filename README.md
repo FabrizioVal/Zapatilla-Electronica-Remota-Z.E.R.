@@ -1,10 +1,13 @@
+# Introduccion
+
 ¡Bienvenido 👋! Si desea saber mas del proyecto, dirijase a la pestaña de "Wiki".
 
 (Por favor, ignore los mensajes inferiores, son anotaciones de trabajo 😅)
 
 
 
-# Codigo-MQTT
+
+#### Anotaciones
 Sitio de almacenamiento para la actualizacion y desarrollo de nuestro codigo de MQTT.
 
 30/05/2023
